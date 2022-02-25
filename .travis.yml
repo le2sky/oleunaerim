@@ -20,7 +20,9 @@ jobs:
 
         - docker push le2sky/oleunaelim-develop-server
 
+      before_deploy:
         - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
+        - cat ./docker-compose.yml
       deploy:
         provider: elasticbeanstalk
         region: 'ap-northeast-2'
@@ -46,5 +48,3 @@ jobs:
         - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
         - docker push le2sky/oleunaelim-production-server
-
-        - mv ./docker/docker-compose.prod.yml ./docker-compose.yml
