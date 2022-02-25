@@ -21,6 +21,9 @@ jobs:
         - docker push le2sky/oleunaelim-develop-server
 
       before_deploy:
+        - mkdir deploy_test
+        - ls
+        - pwd
         - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
         - cat ./docker-compose.yml
       deploy:
