@@ -12,7 +12,7 @@ jobs:
       before_install:
         - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile.dev .
       script:
-        - docker run -e CI=true le2sky/oleunaelim/server-test-app npm test
+        - docker run -e CI=true le2sky/oleunaelim/server-test-app npm run test
       after_success:
         - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev .
 
