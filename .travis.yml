@@ -11,6 +11,7 @@ jobs:
       if: branch = develop
       before_install:
         - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile.dev .
+        - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
       script:
         - docker run -e CI=true le2sky/oleunaelim/server-test-app npm run test
       after_success:
@@ -22,8 +23,6 @@ jobs:
 
       deploy:
         provider: elasticbeanstalk
-        script:
-          - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
         region: 'ap-northeast-2'
         app: 'oleunaelim-test-server'
         env: 'oleunaelim-test-server-env'
