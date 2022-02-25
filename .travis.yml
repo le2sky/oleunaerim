@@ -10,11 +10,11 @@ jobs:
     - name: development server deployment
       if: branch = develop
       before_install:
-        - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile.dev
+        - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile.dev .
       script:
         - docker run -e CI=true le2sky/oleunaelim/server-test-app npm test
       after_success:
-        - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev
+        - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev .
 
         - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
