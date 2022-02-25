@@ -1,0 +1,50 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+jobs:
+  include:
+    - name: development server deployment
+      if: branch = develop
+      before_install:
+        - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile.dev
+      script:
+        - docker run -e CI=true le2sky/oleunaelim/server-test-app npm test
+      after_success:
+        - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev
+
+        - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+        - docker push le2sky/oleunaelim-develop-server
+
+        - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
+      deploy:
+        provider: elasticbeanstalk
+        region: 'ap-northeast-2'
+        app: 'oleunaelim-test-server'
+        env: 'oleunaelim-test-server-env'
+        bucket_name: elasticbeanstalk-ap-northeast-2-315199840269
+        bucket_path: 'oleunaelim-test-server'
+        on:
+          branch: develop
+
+        access_key_id: $AWS_ACCESS_KEY
+        secret_access_key: $AWS_SECRET_ACCESS_KEY
+
+    - name: production server deployment
+      if: branch = main
+      before_install:
+        - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile
+      script:
+        - docker run -e CI=true le2sky/oleunaelim/server-test-app npm test
+      after_success:
+        - docker build -t le2sky/oleunaelim-production-server -f ./docker/Dockerfile
+
+        - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+        - docker push le2sky/oleunaelim-production-server
+
+        - mv ./docker/docker-compose.prod.yml ./docker-compose.yml

@@ -1,0 +1,15 @@
+FROM node:14.18.1
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install -g cross-env
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+CMD npm run start:dev
