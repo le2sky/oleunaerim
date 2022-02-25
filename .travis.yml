@@ -20,14 +20,10 @@ jobs:
 
         - docker push le2sky/oleunaelim-develop-server
 
-      before_deploy:
-        - mkdir deploy_test
-        - ls
-        - pwd
-        - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
-        - cat ./docker-compose.yml
       deploy:
         provider: elasticbeanstalk
+        script:
+          - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
         region: 'ap-northeast-2'
         app: 'oleunaelim-test-server'
         env: 'oleunaelim-test-server-env'
