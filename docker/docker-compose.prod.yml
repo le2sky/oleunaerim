@@ -4,7 +4,7 @@ services:
     image: le2sky/oleunaelim-production-server
     container_name: le2sky/oleunaelim-production-server
     ports:
-      - 8080:3000
+      - 80:3000
     volumes:
       - .:/app
     networks:
