@@ -21,6 +21,7 @@ jobs:
         - docker push le2sky/oleunaelim-develop-server
 
         - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
+        - mv ./docker/Dockerfile.dev ./Dockerfile
 
       deploy:
         egde: true

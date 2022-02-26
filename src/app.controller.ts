@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
   @Get()
   sayHi() {
-    return 'hi';
+    return `${process.env.NODE_ENV} 모드 서버입니다.`;
   }
 }
