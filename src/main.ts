@@ -45,7 +45,7 @@ class Application {
       SwaggerModule.createDocument(
         this.server,
         new DocumentBuilder()
-          .setTitle('todo-management-openApi')
+          .setTitle('등산 구인 플랫폼 오름내림')
           .setDescription('오르내림 서버 API 문서')
           .setVersion('1.0')
           .addTag('todo-management')

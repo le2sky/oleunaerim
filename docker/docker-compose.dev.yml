@@ -23,8 +23,6 @@ services:
       MYSQL_DATABASE: oleunaelim
       MYSQL_ROOT_PASSWORD: root
       TZ: Asia/Seoul
-    volumes:
-      - .dbdata:/var/lib/mysql
     ports:
       - 5432:5432
     networks:
