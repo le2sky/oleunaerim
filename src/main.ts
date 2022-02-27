@@ -15,7 +15,7 @@ class Application {
 
   constructor(private server: NestExpressApplication) {
     this.PORT = process.env.PORT || '3000';
-    this.MODE = process.env.NODE_ENV || 'development';
+    this.MODE = process.env.NODE_ENV || 'local';
     this.corsOriginList = process.env.CORS_ORIGIN_LIST
       ? process.env.CORS_ORIGIN_LIST.split(',').map((origin) => origin.trim())
       : ['*'];
@@ -76,9 +76,7 @@ class Application {
     await this.server.listen(this.PORT);
   }
   startLog() {
-    Logger.log(
-      `✅ ${this.MODE} 모드로 서버-사이드 어플리케이션이 실행됩니다. `,
-    );
+    Logger.log(`✅ ${this.MODE} 모드로 서버-사이드 어플리케이션이 실행됩니다. `);
     if (this.MODE === 'development') {
       Logger.log(`✅ Server on http://localhost:${this.PORT}`);
     } else {

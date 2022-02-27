@@ -17,9 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (!(exception instanceof HttpException)) {
       Logger.error(exception);
-      exception = new InternalServerErrorException(
-        '예기치 못한 서버 오류 발생',
-      );
+      exception = new InternalServerErrorException('예기치 못한 서버 오류 발생');
     }
 
     const status = exception.getStatus();
