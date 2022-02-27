@@ -4,17 +4,10 @@ import { validationSchema } from './config/validationSchema';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import path from 'path';
-import { dirname } from 'path/posix';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [
-        process.env.NODE_ENV === 'local'
-          ? `${__dirname}/config/env/.local.env`
-          : path.join(__dirname, '..', '.env'),
-      ],
       isGlobal: true,
       validationSchema,
     }),
