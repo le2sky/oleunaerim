@@ -2,16 +2,14 @@ version: '3.9'
 services:
   backend:
     image: le2sky/oleunaelim-production-server
-    container_name: le2sky/oleunaelim-production-server
+    container_name: oleunaelim-production-server
     ports:
       - 80:3000
-    volumes:
-      - .:/app
     networks:
       - oleunaelim
     environment:
       - TZ=Asia/Seoul
     env_file:
-      - src/config/env/.production.env
+      - .env
 networks:
   oleunaelim:

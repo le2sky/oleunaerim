@@ -2,26 +2,23 @@ version: '3.9'
 services:
   backend:
     image: le2sky/oleunaelim-develop-server
-    container_name: le2sky/oleunaelim-develop-server
+    container_name: oleunaelim-develop-server
     ports:
-      - 80:3000
-    volumes:
-      - .:/app
+      - 80:${PORT}
     depends_on:
       - db
     networks:
       - oleunaelim
-    environment:
-      - TZ=Asia/Seoul
     env_file:
-      - src/config/env/.development.env
+      - .env
   db:
     image: postgres:latest
     container_name: oleunaelim-db
     restart: always
     environment:
-      MYSQL_DATABASE: oleunaelim
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
       TZ: Asia/Seoul
     ports:
       - 5432:5432

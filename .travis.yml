@@ -10,12 +10,10 @@ jobs:
     - name: development server deployment
       if: branch = develop
       before_install:
-        - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile.dev .
-      script:
-        - docker run -e CI=true le2sky/oleunaelim/server-test-app npm run test
-      after_success:
         - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev .
-
+      script:
+        - docker run -e CI=true le2sky/oleunaelim-develop-server npm run test
+      after_success:
         - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
         - docker push le2sky/oleunaelim-develop-server
@@ -41,12 +39,10 @@ jobs:
     - name: production server deployment
       if: branch = main
       before_install:
-        - docker build -t le2sky/oleunaelim/server-test-app -f ./docker/Dockerfile
+        - docker build -t le2sky/oleunaelim-production-server -f ./docker/Dockerfile .
       script:
         - docker run -e CI=true le2sky/oleunaelim/server-test-app npm test
       after_success:
-        - docker build -t le2sky/oleunaelim-production-server -f ./docker/Dockerfile
-
         - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
         - docker push le2sky/oleunaelim-production-server

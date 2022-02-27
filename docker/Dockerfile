@@ -1,15 +1,22 @@
-FROM node:14.18.1
+FROM node:16-alpine3.11
 
-WORKDIR /app
+ENV LANG=ko_KR.UTF-8 \
+    LANGUAGE=ko_KR.UTF-8
 
-COPY package.json .
+RUN apk --no-cache add tzdata && \
+        cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
+        echo "Asia/Seoul" > /etc/timezone
 
-RUN npm install -g cross-env
+WORKDIR /usr/src/app
+
+ENV NODE_ENV=production
+
+COPY package.json ./
 
 RUN npm install
 
-COPY . .
+COPY ./ ./
 
 RUN npm run build
 
-CMD npm run start:prod
+CMD ["node", "dist/main"]
