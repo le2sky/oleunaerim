@@ -12,14 +12,13 @@ import {
 } from 'typeorm';
 import { CommentsEntity } from './comments.entity';
 import { DateAuditEntity } from './dateAudit.entity';
-import { FeedsEntity } from './feed.entity';
+import { FeedsEntity } from './feeds.entity';
 import { ImagesEntity } from './images.entity';
 import { LikesEntity } from './likes.entity';
 import { PostMembers } from './postMembers.entity';
 import { PostsEntity } from './posts.entity';
 
 @Entity('users')
-@Unique(['email', 'nickName', 'tel'])
 export class UsersEntity extends DateAuditEntity {
   @PrimaryGeneratedColumn()
   id: number;
