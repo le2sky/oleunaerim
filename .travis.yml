@@ -16,6 +16,7 @@ jobs:
       after_success:
         - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
+        - docker image ls
         - docker push le2sky/oleunaelim-develop-server
 
         - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
