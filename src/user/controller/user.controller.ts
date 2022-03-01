@@ -1,5 +1,5 @@
-import { Body, Controller, HttpCode, Post, UseGuards, UseInterceptors } from '@nestjs/common';
-import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
+import { Body, Controller, HttpCode, Post, UseInterceptors } from '@nestjs/common';
+import { SuccessInterceptor } from '../../common/interceptors/success.interceptor';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { FindEmailDto } from '../dtos/findEmail.dto';
 import { UserService } from '../services/user.service';

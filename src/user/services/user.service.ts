@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRecord } from 'firebase-admin/lib/auth/user-record';
-import { UsersEntity } from 'src/database/entities/users.entity';
+import { UsersEntity } from '../../database/entities/users.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { FindEmailDto } from '../dtos/findEmail.dto';
