@@ -28,11 +28,10 @@ export class AuthGuard implements CanActivate {
           throw new NotFoundException('존재하지 않는 유저입니다.');
         }
       } catch (err) {
-        console.log(err.code);
-        throw new UnauthorizedException();
+        throw new UnauthorizedException(err.message + `(${err.code})`);
       }
     } else {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('there is no token');
     }
   }
 }

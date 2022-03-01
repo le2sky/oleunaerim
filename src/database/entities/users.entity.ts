@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsNotEmpty, IsPhoneNumber, IsString, isValidationOptions } from 'class-validator';
 import {
   Unique,
   Column,
@@ -40,7 +40,6 @@ export class UsersEntity extends DateAuditEntity {
   gender: 'male' | 'female';
 
   @IsNotEmpty()
-  @IsPhoneNumber()
   @Column({ type: 'varchar', length: 100 })
   phone: string;
 
