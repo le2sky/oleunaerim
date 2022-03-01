@@ -10,14 +10,12 @@ jobs:
     - name: development server deployment
       if: branch = develop
       before_install:
-        - docker build -t le2sky/oleunaelim-test-server -f ./docker/Dockerfile.dev .
+        - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev .
       script:
-        - docker run -e CI=true le2sky/oleunaelim-test-server npm run test
+        - docker run -e CI=true le2sky/oleunaelim-develop-server npm run test
       after_success:
         - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
-        - docker build -t le2sky/oleunaelim-develop-server -f ./docker/Dockerfile.dev .
-        - docker image ls
         - docker push le2sky/oleunaelim-develop-server
 
         - mv ./docker/docker-compose.dev.yml ./docker-compose.yml
@@ -28,8 +26,8 @@ jobs:
         cleanup: false
         provider: elasticbeanstalk
         region: 'ap-northeast-2'
-        app: 'oleunaelim-test-server'
-        env: 'oleunaelim-test-server-env'
+        app: 'Oleunaelim-develop-server'
+        env: 'Oleunaelim-develop-server-env'
         bucket_name: elasticbeanstalk-ap-northeast-2-315199840269
         bucket_path: 'oleunaelim-test-server'
         on:
