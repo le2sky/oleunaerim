@@ -1,6 +1,7 @@
-import { Body, Controller, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { CreateUserDto } from '../dtos/createUser.dto';
+import { FindEmailDto } from '../dtos/findEmail.dto';
 import { UserService } from '../services/user.service';
 
 @Controller('users')
@@ -10,5 +11,11 @@ export class UserController {
   @Post()
   async signUp(@Body() dto: CreateUserDto) {
     return await this.userService.signUp(dto);
+  }
+
+  @Post('/email/find')
+  @HttpCode(200)
+  async findEmail(@Body() dto: FindEmailDto) {
+    return await this.userService.findEmail(dto);
   }
 }

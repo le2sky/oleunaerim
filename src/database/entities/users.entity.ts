@@ -26,7 +26,7 @@ export class UsersEntity extends DateAuditEntity {
   @IsNotEmpty()
   @IsEmail()
   @IsString()
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, unique: true })
   email: string;
 
   @IsNotEmpty()
@@ -40,7 +40,7 @@ export class UsersEntity extends DateAuditEntity {
   gender: 'male' | 'female';
 
   @IsNotEmpty()
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, unique: true })
   phone: string;
 
   @IsNotEmpty()
