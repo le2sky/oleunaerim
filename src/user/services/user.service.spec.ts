@@ -1,3 +1,3 @@
 describe('UserService', () => {
-  it('', () => {});
+  it('UserService', () => {});
 });
