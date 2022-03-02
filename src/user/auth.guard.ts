@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 import { Reflector } from '@nestjs/core';
 import { FirebaseService } from './services/firebase.service';
 import { UserService } from 'src/user/services/user.service';
+import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,18 +18,19 @@ export class AuthGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const token = context.switchToHttp().getRequest().headers.authorization;
+    const req = context.switchToHttp().getRequest();
+    const token = req.headers.authorization;
+    let decodedToken;
     if (token != null && token != '') {
       try {
-        const decodedToken = await this.firebaseApp.auth().verifyIdToken(token.replace('Bearer', ''));
-        const user = await this.userService.findOneWithFirebaseId(decodedToken.uid);
-        if (user) {
-          return true;
-        } else {
-          throw new NotFoundException('존재하지 않는 유저입니다.');
-        }
+        decodedToken = await this.firebaseApp.auth().verifyIdToken(token.replace('Bearer', ''));
       } catch (err) {
         throw new UnauthorizedException(err.message + `(${err.code})`);
+      }
+      const user = await this.userService.findOne({ firebaseId: decodedToken.uid });
+      if (user) {
+        req.userInfo = user;
+        return true;
       }
     } else {
       throw new UnauthorizedException('there is no token');
