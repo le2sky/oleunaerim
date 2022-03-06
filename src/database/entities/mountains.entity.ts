@@ -17,10 +17,10 @@ export class MountainsEntity extends DateAuditEntity {
   @Column()
   url: string;
 
-  @Column()
+  @Column({ type: 'numeric' })
   lat: number;
 
-  @Column()
+  @Column({ type: 'numeric' })
   lon: number;
 
   @Column('int', { name: 'imageId', nullable: true })
