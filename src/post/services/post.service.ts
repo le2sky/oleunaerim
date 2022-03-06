@@ -13,7 +13,7 @@ export class PostService {
     @InjectRepository(PostMembers) private readonly postMemeberRepository: Repository<PostMembers>,
     private readonly userService: UserService,
   ) {}
-  async createPost(dto: CreatePostDto): Promise<PostsEntity> {
+  async create(dto: CreatePostDto): Promise<PostsEntity> {
     const { departureAt } = dto;
 
     const now = new Date();
@@ -26,7 +26,7 @@ export class PostService {
     return await this.postRepository.save(dto);
   }
 
-  async joinPost(postId: number, userId: number): Promise<PostMembers> {
+  async join(postId: number, userId: number): Promise<PostMembers> {
     const post = await this.postRepository.findOne({ id: postId });
     if (!post) {
       throw new NotFoundException('존재하지 않는 모임입니다.');
@@ -43,5 +43,12 @@ export class PostService {
     postMember.UserId = userId;
 
     return await this.postMemeberRepository.save(postMember);
+  }
+
+  public async delete(postId: number, ownerId: number): Promise<void> {
+    const post = await this.postRepository.findOne({
+      where: { id: postId, ownerId: ownerId },
+    });
+    await this.postRepository.remove(post);
   }
 }
