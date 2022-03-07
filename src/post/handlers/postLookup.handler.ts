@@ -55,6 +55,7 @@ export class PostLookupHandler implements ICommandHandler<PostLookupCommand> {
         'postMembers.createdAt',
         'users.id',
         'owner.id',
+        'owner.firebaseId',
         'owner.gender',
       ])
       .orderBy(orderBy.key, orderBy.value)

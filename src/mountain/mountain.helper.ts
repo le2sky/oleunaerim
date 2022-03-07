@@ -46,6 +46,10 @@ export class MountainHelper implements OnModuleInit {
       Logger.log('산 데이터를 DB에 성공적으로 저장했습니다.', 'MountainHelper');
     } catch (err) {
       Logger.log('JSON 데이터를 읽는데 실패했습니다.', 'MountainHelper');
+      Logger.log('JSON 데이터를 불러옵니다.', 'MountainHelper');
+      const mountainsGenerator = require('../lib/mountain-generator/index');
+      await mountainsGenerator();
+      await this.seedingData();
     }
   }
 }

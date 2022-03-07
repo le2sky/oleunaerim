@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MountainsEntity } from 'src/database/entities/mountains.entity';
 import { PostMembers } from 'src/database/entities/postMembers.entity';
 import { PostsEntity } from 'src/database/entities/posts.entity';
 import { UserService } from 'src/user/services/user.service';
@@ -11,18 +12,23 @@ export class PostService {
   constructor(
     @InjectRepository(PostsEntity) private readonly postRepository: Repository<PostsEntity>,
     @InjectRepository(PostMembers) private readonly postMemeberRepository: Repository<PostMembers>,
+    @InjectRepository(MountainsEntity) private readonly mountainRepository: Repository<MountainsEntity>,
     private readonly userService: UserService,
   ) {}
   async create(dto: CreatePostDto): Promise<PostsEntity> {
-    const { departureAt } = dto;
+    const { departureAt, mountainId } = dto;
 
     const now = new Date();
     const deadline = new Date(departureAt);
     if (deadline < now) {
       throw new BadRequestException('현재 시점보다 미래의 시간을 지정해야 합니다.');
     }
+    await this.userService.findOne({ id: dto.ownerId });
+    const mountain = await this.mountainRepository.findOne({ id: mountainId });
+    if(!mountain){
+      throw new NotFoundException('존재하지 않는 산입니다.')
+    }
 
-    const user = await this.userService.findOne({ id: dto.ownerId });
     return await this.postRepository.save(dto);
   }
 
