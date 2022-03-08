@@ -13,12 +13,19 @@ export interface IMountainInforamtion {
 
 @Injectable()
 export class MountainHelper implements OnModuleInit {
-  constructor(@InjectRepository(MountainsEntity) private readonly mountainRepository: Repository<MountainsEntity>) {}
+  randomImage: () => Promise<string>;
   async onModuleInit() {
     if (!(await this.isDataBinding())) {
       Logger.log('DB에 산 데이터가 없습니다. 저장을 시작합니다.', 'MountainHelper');
       await this.seedingData();
     }
+  }
+  constructor(@InjectRepository(MountainsEntity) private readonly mountainRepository: Repository<MountainsEntity>) {
+    this.randomImage = require('../lib/mountain-random-image/main');
+  }
+  async getMountainImage(): Promise<string> {
+    const imageUrl: string = await this.randomImage();
+    return imageUrl;
   }
 
   private async isDataBinding(): Promise<boolean> {
@@ -47,7 +54,7 @@ export class MountainHelper implements OnModuleInit {
     } catch (err) {
       Logger.log('JSON 데이터를 읽는데 실패했습니다.', 'MountainHelper');
       Logger.log('JSON 데이터를 불러옵니다.', 'MountainHelper');
-      const mountainsGenerator = require('../lib/mountain-generator/index');
+      const mountainsGenerator = require('../lib/mountain-generator/main');
       await mountainsGenerator();
       await this.seedingData();
     }

@@ -12,21 +12,7 @@ import { MountainModule } from './mountain/mountain.module';
       isGlobal: true,
       validationSchema,
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService): TypeOrmModuleOptions => {
-        return {
-          type: 'postgres',
-          host: configService.get('DB_HOST'),
-          port: configService.get<number>('DB_PORT'),
-          username: configService.get('DB_USERNAME'),
-          password: configService.get('DB_USER_PASSWORD'),
-          database: configService.get('DATABASE_NAME'),
-          synchronize: process.env.NODE_ENV === 'production' ? false : true,
-          entities: ['dist/**/*.entity{.ts,.js}'],
-        };
-      },
-    }),
+    TypeOrmModule.forRoot(),
     UserModule,
     PostModule,
     MountainModule,
