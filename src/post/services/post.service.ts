@@ -25,22 +25,23 @@ export class PostService {
     }
     await this.userService.findOne({ id: dto.ownerId });
     const mountain = await this.mountainRepository.findOne({ id: mountainId });
-    if(!mountain){
-      throw new NotFoundException('존재하지 않는 산입니다.')
+    if (!mountain) {
+      throw new NotFoundException('존재하지 않는 산입니다.');
     }
 
     return await this.postRepository.save(dto);
   }
 
   async join(postId: number, userId: number): Promise<PostMembers> {
-    const post = await this.postRepository.findOne({ id: postId });
+    const post = await this.postRepository.findOne({ relations: ['PostMembers'], where: { id: postId } });
     if (!post) {
       throw new NotFoundException('존재하지 않는 모임입니다.');
     }
     const { PostMembers: members } = post;
 
     const isMember = members.filter((member) => member.id === userId);
-    if (isMember) {
+    const isOwner = post.ownerId === userId;
+    if (isMember.length || isOwner) {
       throw new UnprocessableEntityException('이미 가입한 모임입니다.');
     }
 

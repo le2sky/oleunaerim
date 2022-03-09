@@ -1,20 +1,27 @@
 module.exports = async function mountainsGenerator() {
+  function mkdir(dirPath) {
+    const isExists = fs.existsSync(dirPath);
+    if (!isExists) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+  }
   const REGION_BASE = require('./region_base');
   const axios = require('axios');
   const fs = require('fs-extra');
   const path = require('path');
   require('dotenv').config();
   const targetPath = path.join(__dirname, '..', '..');
+  mkdir(`${targetPath}\\public\\data\\result`);
   const KAKAO_REST_API_KEY = process.env.KAKAO_REST_API_KEY;
   const updatedAt = Date.now();
   let totalDataCount = 0;
   const resultMap = new Map();
   const uniquenessMap = new Map();
   const regionKeys = Object.keys(REGION_BASE);
-  const getTargetPath = (region) => `${targetPath}/public/data/result/${region}.json`;
-  const TARGET_DIR = `${targetPath}/public/data/result`;
-  const LOCATION_PATH = `${targetPath}/public/data/result/location.json`;
-  const RESULT_PATH = `${targetPath}/public/data/result/total_count.txt`;
+  const getTargetPath = (region) => `${targetPath}\\public\\data\\result/${region}.json`;
+  const TARGET_DIR = `${targetPath}\\public\\data\\result`;
+  const LOCATION_PATH = `${targetPath}\\public\\data\\result\\location.json`;
+  const RESULT_PATH = `${targetPath}\\public\\data\\result\\total_count.txt`;
   const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
   // 검색어, 카테고리 //
@@ -73,7 +80,7 @@ module.exports = async function mountainsGenerator() {
         });
       }
 
-      console.log(`${region} 지역 데이터를 성공적으로 생성 하였습니다.`);
+      console.log(`[Mountain-Generator Log] ${region} 지역 데이터를 성공적으로 생성 하였습니다. : ${new Date()}`);
     }
   };
 
@@ -114,6 +121,8 @@ module.exports = async function mountainsGenerator() {
       fs.rmdirSync(TARGET_DIR, { recursive: true });
     }
   }
-
-  excute();
+  console.log(
+    '-------------------------------------------------mountain-generator-------------------------------------------------',
+  );
+  await excute();
 };

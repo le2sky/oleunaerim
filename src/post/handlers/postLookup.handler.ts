@@ -47,6 +47,7 @@ export class PostLookupHandler implements ICommandHandler<PostLookupCommand> {
         'posts.createdAt',
         'posts.departureAt',
         'mountain.name',
+        'mountain.address',
         'posts.place',
         'posts.maleNumber',
         'posts.femaleNumber',

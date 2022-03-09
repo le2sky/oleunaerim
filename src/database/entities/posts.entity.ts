@@ -67,6 +67,11 @@ export class PostsEntity extends DateAuditEntity {
   @Column('int', { name: 'ownerId', nullable: true })
   ownerId: number | null;
 
+  @IsNotEmpty()
+  @IsNumber()
+  @Column('int', { name: 'mountainId', nullable: true })
+  mountainId: number | null;
+
   @Column({ default: 0 })
   viewCount: number;
 
@@ -84,9 +89,6 @@ export class PostsEntity extends DateAuditEntity {
 
   @Column('text', { name: 'lastCommentUserBody', nullable: true })
   lastCommentUserBody: string | null;
-
-  @Column('int', { name: 'mountainId', nullable: true })
-  mountainId: number | null;
 
   @Column('int', { name: 'imageId', nullable: true })
   imageId: number | null;

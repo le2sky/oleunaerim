@@ -17,6 +17,9 @@ export class ConfigService {
   isLocal(): boolean {
     return this.getValue('NODE_ENV', false) === 'local';
   }
+  isProduction(): boolean {
+    return this.getValue('NODE_ENV', false) === 'production';
+  }
   getTypeOrmConfig(): TypeOrmModuleOptions {
     const tempPort = Number(this.getValue('DB_PORT'));
     const join = require('path').join;
@@ -27,7 +30,7 @@ export class ConfigService {
       username: this.getValue('DB_USERNAME'),
       password: this.getValue('DB_USER_PASSWORD'),
       database: this.getValue('DATABASE_NAME'),
-      synchronize: this.isLocal() ? true : false,
+      synchronize: this.isProduction() ? false : true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: [
         this.isLocal() ? join(__dirname, '/migrations/*{.ts,.js}') : join(__dirname, '../dist/migrations/*{.ts,.js}'),

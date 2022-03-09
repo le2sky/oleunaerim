@@ -6,11 +6,12 @@ import { PostMembers } from 'src/database/entities/postMembers.entity';
 import { PostsEntity } from 'src/database/entities/posts.entity';
 import { UserModule } from 'src/user/user.module';
 import { PostController } from './controller/post.controller';
+import { PostLookupHandler } from './handlers/postLookup.handler';
 import { PostService } from './services/post.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PostsEntity, PostMembers, MountainsEntity]), UserModule, CqrsModule],
   controllers: [PostController],
-  providers: [PostService],
+  providers: [PostService, PostLookupHandler],
 })
 export class PostModule {}
