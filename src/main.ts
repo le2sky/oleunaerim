@@ -5,6 +5,17 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { AppModule } from './app.module';
+import { ConfigService } from './config/config.service';
+import * as fs from 'fs';
+
+async function makeOrmConfig() {
+  const configService = new ConfigService(process.env);
+  const typeormConfig = configService.getTypeOrmConfig();
+  if (fs.existsSync('ormconfig.json')) {
+    fs.unlinkSync('ormconfig.json');
+  }
+  fs.writeFileSync('ormconfig.json', JSON.stringify(typeormConfig, null, 2));
+}
 
 class Application {
   private PORT: string;
@@ -90,6 +101,7 @@ class Application {
 }
 
 async function init() {
+  await makeOrmConfig();
   const server = await NestFactory.create<NestExpressApplication>(AppModule);
   const app = new Application(server);
   try {

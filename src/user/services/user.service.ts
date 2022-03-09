@@ -7,6 +7,12 @@ import { CreateUserDto } from '../dtos/createUser.dto';
 import { FindEmailDto } from '../dtos/findEmail.dto';
 import { FirebaseService } from './firebase.service';
 
+export interface IUserFindOptions {
+  email?: string;
+  firebaseId?: string;
+  id?: number;
+}
+
 @Injectable()
 export class UserService {
   constructor(
@@ -45,8 +51,8 @@ export class UserService {
     return findedUser.email;
   }
 
-  async findOneWithFirebaseId(firebaseId: string): Promise<UsersEntity> {
-    const user = await this.userRepository.findOne({ firebaseId });
+  async findOne(option: IUserFindOptions): Promise<UsersEntity> {
+    const user = await this.userRepository.findOne(option);
     if (!user) {
       throw new NotFoundException('존재하지 않는 유저입니다.');
     }
