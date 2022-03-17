@@ -26,7 +26,7 @@ module.exports = async function mountainsGenerator() {
 
   // 검색어, 카테고리 //
   const QUERY = '산';
-  const CATEGORY_NAME = '여행 > 관광,명소 > 산';
+  const CATEGORY_NAME = '여행 > 관광,명소 > 산 ';
 
   // ex) ['서울특별시 종로구', ...];
   const REGION = Object.entries(REGION_BASE).reduce((acc, [k, v]) => [...acc, ...v.map((u) => `${k} ${u}`)], []);

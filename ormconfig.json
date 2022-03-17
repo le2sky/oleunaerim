@@ -1,0 +1,19 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "root",
+  "password": "root",
+  "database": "local-db",
+  "synchronize": true,
+  "entities": [
+    "dist/**/*.entity{.ts,.js}"
+  ],
+  "migrations": [
+    "C:\\Users\\82108\\Desktop\\directories\\repositories\\오르내림\\오르내림\\olnl\\oleunaelim\\dist\\config\\migrations\\*{.ts,.js}"
+  ],
+  "cli": {
+    "entitiesDir": "C:\\Users\\82108\\Desktop\\directories\\repositories\\오르내림\\오르내림\\olnl\\oleunaelim\\dist\\config\\database\\entities",
+    "migrationsDir": "C:\\Users\\82108\\Desktop\\directories\\repositories\\오르내림\\오르내림\\olnl\\oleunaelim\\dist\\config\\migrations"
+  }
+}
