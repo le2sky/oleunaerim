@@ -23,9 +23,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     networks:
       - oleunaelim
+
+volumes:
+  pgdata:
 
 networks:
   oleunaelim:
